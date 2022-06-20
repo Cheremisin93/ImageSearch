@@ -9,6 +9,11 @@ import UIKit
 
 class PhotosCollectionViewController: UICollectionViewController {
     
+    var networkDataFetcher = NetworkDataFetcher()
+    private var timer: Timer?
+    
+    private var photos = [UnsplashPhoto]()
+    
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
     }()
@@ -20,10 +25,12 @@ class PhotosCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = .white
         setupCollectionView()
         setupNavigationBar()
         setupSearchBar()
+        
+        
     }
     
     //MARK: - Setup UI Element
@@ -62,11 +69,14 @@ class PhotosCollectionViewController: UICollectionViewController {
     // MARK: - UICollectionViewDatasource/Delegate
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        return photos.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellId", for: indexPath)
+        
+        let unsplashPhotos = photos[indexPath.item]
+        
         cell.backgroundColor = .yellow
         return cell
     }
@@ -78,5 +88,16 @@ class PhotosCollectionViewController: UICollectionViewController {
 extension PhotosCollectionViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
+            
+            self.networkDataFetcher.fetchImage(searchTerm: searchText) { [weak self] searchResults in
+                
+                guard let fetchedPhoto = searchResults else { return }
+                self?.photos = fetchedPhoto.results
+                
+                
+            }
+        })
     }
 }
