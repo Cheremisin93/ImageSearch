@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		36586C24D0B328B778E06A9A /* Pods_ImageSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA514FD26AC1FAF61AE00D46 /* Pods_ImageSearch.framework */; };
 		EF41213C2861E2FA008525ED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41213B2861E2FA008525ED /* SceneDelegate.swift */; };
+		EF41214628622E17008525ED /* FavoritesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF41214528622E17008525ED /* FavoritesCollectionViewController.swift */; };
 		EF7981C3286053E70000BA91 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7981C2286053E70000BA91 /* NetworkService.swift */; };
 		EF7981C628607A2B0000BA91 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7981C528607A2B0000BA91 /* NetworkDataFetcher.swift */; };
 		EF7981C828607A6B0000BA91 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7981C728607A6B0000BA91 /* SearchResult.swift */; };
@@ -26,6 +27,7 @@
 		07DFDCBC85DF86E1F8F66839 /* Pods-ImageSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageSearch.release.xcconfig"; path = "Target Support Files/Pods-ImageSearch/Pods-ImageSearch.release.xcconfig"; sourceTree = "<group>"; };
 		EA514FD26AC1FAF61AE00D46 /* Pods_ImageSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF41213B2861E2FA008525ED /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		EF41214528622E17008525ED /* FavoritesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCollectionViewController.swift; sourceTree = "<group>"; };
 		EF7981C2286053E70000BA91 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		EF7981C528607A2B0000BA91 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		EF7981C728607A6B0000BA91 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
@@ -100,6 +102,14 @@
 			path = "Supporting files";
 			sourceTree = "<group>";
 		};
+		EF41214428622DF7008525ED /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				EF41214528622E17008525ED /* FavoritesCollectionViewController.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
 		EF7981C428605D6A0000BA91 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +149,7 @@
 		EFAE05FD285E125D00067173 /* ImageSearch */ = {
 			isa = PBXGroup;
 			children = (
+				EF41214428622DF7008525ED /* Favorites */,
 				EF41214028620A44008525ED /* Delegate */,
 				EF7981C428605D6A0000BA91 /* Service */,
 				EFAE0602285E125D00067173 /* ViewController.swift */,
@@ -264,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF7981C628607A2B0000BA91 /* NetworkDataFetcher.swift in Sources */,
+				EF41214628622E17008525ED /* FavoritesCollectionViewController.swift in Sources */,
 				EF7981C828607A6B0000BA91 /* SearchResult.swift in Sources */,
 				EFAE0603285E125D00067173 /* ViewController.swift in Sources */,
 				EFAE0609285E125D00067173 /* ImageSearch.xcdatamodeld in Sources */,
