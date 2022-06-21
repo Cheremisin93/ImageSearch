@@ -12,6 +12,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     private let itemsPerRow: CGFloat = 2
     private let sectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     
+    var favoritesPhoto = FavoritesCollectionViewController()
+    var dataStoreManager = DataStoreManager()
     var networkDataFetcher = NetworkDataFetcher()
     private var timer: Timer?
     
@@ -88,8 +90,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     private func setupSearchBar() {
-
-//        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        //        navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
         searchController.searchBar.searchTextField.placeholder = "Поиск"
@@ -98,9 +100,19 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     // MARK: - NavigationItems action
+
     
     @objc private func addButtonTapped() {
-        print(#function)
+        
+        
+        for image in selectedImages {
+            
+            if let imageData = image.pngData() {
+                dataStoreManager.saveImage(data: imageData)
+            }
+            
+        }
+        
     }
     
     @objc private func actionButtonTapped(sender: UIBarButtonItem) {
@@ -134,9 +146,13 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         updateNavButtonState()
+        
+        
         let cell = collectionView.cellForItem(at: indexPath) as! PhotoCell
+        
         guard let image = cell.photoImageView.image else { return }
         selectedImages.append(image)
+        
         
     }
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -181,6 +197,7 @@ extension PhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
         let height = CGFloat(photo.height) * widthPerItem / CGFloat(photo.width)
+        
         
         return CGSize(width: widthPerItem, height: height)
     }

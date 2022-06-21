@@ -6,23 +6,42 @@
 //
 
 import UIKit
-
-private let reuseIdentifier = "Cell"
+import CoreData
+import SDWebImage
 
 class FavoritesCollectionViewController: UICollectionViewController {
-
+    
+    private let itemsPerRow: CGFloat = 2
+    private let sectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    
+    var favoritesPhoto: [Photos] = []
+    let dataStoreManager = DataStoreManager()
+    
+    func fetchPhoto() -> [Photos]{
+        let context = dataStoreManager.viewContext
+        
+        do {
+            let photos = try context.fetch(Photos.fetchRequest())
+            return photos
+        } catch {
+            print(error)
+            return []
+        }
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        favoritesPhoto = fetchPhoto()
+        self.collectionView!.register(FavoritesCollectionViewCell.self, forCellWithReuseIdentifier: FavoritesCollectionViewCell.reuseId)
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+//        favoritesPhoto = fetchPhoto()
+        collectionView.reloadData()
+        
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -35,22 +54,19 @@ class FavoritesCollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return favoritesPhoto.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoritesCollectionViewCell.reuseId, for: indexPath) as! FavoritesCollectionViewCell
+        
+        let photo = favoritesPhoto[indexPath.item]
+
+        if let image = photo.imageData {
+            cell.photoImageView.image = UIImage(data: image)
+        }
+        
         return cell
     }
 
@@ -85,4 +101,28 @@ class FavoritesCollectionViewController: UICollectionViewController {
     }
     */
 
+}
+
+//MARK: -UICollectionViewDelegateFlowLayout
+
+extension FavoritesCollectionViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let photo = favoritesPhoto[indexPath.item]
+        let paddingSpace = sectionInserts.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        let height = CGFloat(20) * widthPerItem / CGFloat(20)
+        
+        return CGSize(width: widthPerItem, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInserts
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInserts.left
+    }
+    
 }
