@@ -80,9 +80,30 @@
 			path = Photos;
 			sourceTree = "<group>";
 		};
+		EF41214028620A44008525ED /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				EFAE05FE285E125D00067173 /* AppDelegate.swift */,
+				EF41213B2861E2FA008525ED /* SceneDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		EF41214128620A6D008525ED /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				EFAE060A285E125F00067173 /* Assets.xcassets */,
+				EFAE060C285E125F00067173 /* LaunchScreen.storyboard */,
+				EFAE060F285E125F00067173 /* Info.plist */,
+				EFAE0607285E125D00067173 /* ImageSearch.xcdatamodeld */,
+			);
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
 		EF7981C428605D6A0000BA91 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				EF7981C928607A720000BA91 /* Models */,
 				EF7981C2286053E70000BA91 /* NetworkService.swift */,
 				EF7981C528607A2B0000BA91 /* NetworkDataFetcher.swift */,
 			);
@@ -118,17 +139,12 @@
 		EFAE05FD285E125D00067173 /* ImageSearch */ = {
 			isa = PBXGroup;
 			children = (
+				EF41214028620A44008525ED /* Delegate */,
 				EF7981C428605D6A0000BA91 /* Service */,
-				EF7981C928607A720000BA91 /* Models */,
-				EFAE05FE285E125D00067173 /* AppDelegate.swift */,
-				EF41213B2861E2FA008525ED /* SceneDelegate.swift */,
 				EFAE0602285E125D00067173 /* ViewController.swift */,
 				EFAE0615285E13EC00067173 /* MainTabBarController.swift */,
 				EF41213D2861FBC8008525ED /* Photos */,
-				EFAE060A285E125F00067173 /* Assets.xcassets */,
-				EFAE060C285E125F00067173 /* LaunchScreen.storyboard */,
-				EFAE060F285E125F00067173 /* Info.plist */,
-				EFAE0607285E125D00067173 /* ImageSearch.xcdatamodeld */,
+				EF41214128620A6D008525ED /* Supporting files */,
 			);
 			path = ImageSearch;
 			sourceTree = "<group>";
@@ -398,7 +414,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TMH7W47KB5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageSearch/Info.plist;
+				INFOPLIST_FILE = "ImageSearch/Supporting files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -426,7 +442,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TMH7W47KB5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageSearch/Info.plist;
+				INFOPLIST_FILE = "ImageSearch/Supporting files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

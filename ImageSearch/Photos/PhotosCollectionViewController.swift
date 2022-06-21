@@ -18,6 +18,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     private var photos = [UnsplashPhoto]()
     
     private var selectedImages = [UIImage]()
+    private let searchController = UISearchController(searchResultsController: nil)
     
     private lazy var addBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
@@ -29,17 +30,32 @@ class PhotosCollectionViewController: UICollectionViewController {
         return collectionView.indexPathsForSelectedItems?.count ?? 0
     }
     
+    private lazy var labelSearch: UILabel = {
+        let label = UILabel(frame: CGRect(x: view.frame.width / 2, y: view.frame.height / 2, width: 50, height: 50))
+        label.text = "Введите название изображения"
+        return label
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         updateNavButtonState()
         collectionView.backgroundColor = .white
         setupCollectionView()
         setupNavigationBar()
         setupSearchBar()
-        
-        
+        fetchPhoto()
     }
+    
+    private func fetchPhoto() {
+        networkDataFetcher.fetchImageRandom { [weak self] result in
+            guard let photos = result else { return }
+            self?.photos = photos
+            self?.collectionView.reloadData()
+        }
+    }
+    
     private func updateNavButtonState() {
         addBarButtonItem.isEnabled = numberOfSelectedPhotos > 0
         actionBarButtonItem.isEnabled = numberOfSelectedPhotos > 0
@@ -72,13 +88,15 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     private func setupSearchBar() {
-        let searchController = UISearchController(searchResultsController: nil)
-        navigationItem.hidesSearchBarWhenScrolling = false
+
+//        navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
+        searchController.searchBar.searchTextField.placeholder = "Поиск"
         
         
     }
+    
     // MARK: - NavigationItems action
     
     @objc private func addButtonTapped() {
@@ -92,7 +110,6 @@ class PhotosCollectionViewController: UICollectionViewController {
             if bool {
                 self.refresh()
             }
-            
         }
         sharedController.popoverPresentationController?.barButtonItem = sender
         sharedController.popoverPresentationController?.permittedArrowDirections = .any
@@ -136,14 +153,12 @@ class PhotosCollectionViewController: UICollectionViewController {
 // MARK: - UISearchBarDelegate
 
 extension PhotosCollectionViewController: UISearchBarDelegate {
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
         
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            
             self.networkDataFetcher.fetchImage(searchTerm: searchText) { [weak self] searchResults in
-                
                 guard let fetchedPhoto = searchResults else { return }
                 self?.photos = fetchedPhoto.results
                 self?.collectionView.reloadData()
@@ -152,6 +167,8 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
             }
         })
     }
+    
+    
 }
 
 //MARK: -UICollectionViewDelegateFlowLayout

@@ -18,6 +18,16 @@ class NetworkService {
         let task = createDataTask(request: request, comletion: completion)
         task.resume()
     }
+    func requestRandom(completion: @escaping (Data?, Error?) -> Void) {
+        let url = self.urlRandomPhoto()
+        var request = URLRequest(url: url)
+        request.allHTTPHeaderFields = prepareHeders()
+        request.httpMethod = "get"
+        let task = createDataTask(request: request, comletion: completion)
+        task.resume()
+        
+    }
+    
     private func prepareHeders() -> [String: String]? {
         var heders = [String:String]()
         heders["Authorization"] = "Client-ID u9sgTS9AYO6DUSDoXcz7E4iR7yi4UMP1ybcjlbZZIho"
@@ -40,6 +50,17 @@ class NetworkService {
         return components.url!
         
     }
+    
+    private func urlRandomPhoto() -> URL {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.unsplash.com"
+        components.path = "/photos/random"
+        components.queryItems = [URLQueryItem(name: "count", value: "30")]
+        return components.url!
+        
+    }
+    
     private func createDataTask(request: URLRequest, comletion: @escaping (Data?, Error?) -> Void) -> URLSessionDataTask {
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {

@@ -18,6 +18,9 @@ class MainTabBarController: UITabBarController {
         
         let photosVC = PhotosCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
         
+        
+        
+        
         viewControllers = [generateNavigationController(rootViewController: photosVC, title: "Images", image: UIImage(named: "photos")!),
                            generateNavigationController(rootViewController: ViewController(), title: "Favorites", image: UIImage(named: "heart")!)]
         
