@@ -5,14 +5,14 @@
 //  Created by Cheremisin Andrey on 20.06.2022.
 //
 
-import Foundation
 import UIKit
+import SDWebImage
 
 class PhotoCell: UICollectionViewCell {
     
     static let reuseId = "PhotoCell"
     
-    private let photoImageView: UIImageView = {
+    let photoImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .white
@@ -21,7 +21,7 @@ class PhotoCell: UICollectionViewCell {
     }()
     
     private let checkmark: UIImageView = {
-        let image = UIImage(named: "checkmark")
+        let image = UIImage(named: "bird")
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0
@@ -31,9 +31,12 @@ class PhotoCell: UICollectionViewCell {
     var unsplashPhoto: UnsplashPhoto! {
         didSet {
             let photoUrl = unsplashPhoto.urls["regular"]
+            guard let imageUrl = photoUrl, let url = URL(string: imageUrl) else { return }
+            photoImageView.sd_setImage(with: url, completed: nil)
             
         }
     }
+    
     
     override var isSelected: Bool {
         didSet {
@@ -50,8 +53,8 @@ class PhotoCell: UICollectionViewCell {
         super.init(frame: frame)
         
         updateSelectedState()
-        setupCheckMark()
         setupPhotoImageView()
+        setupCheckMark()
         
     }
     
@@ -70,6 +73,8 @@ class PhotoCell: UICollectionViewCell {
        addSubview(checkmark)
         checkmark.trailingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: -8).isActive = true
         checkmark.bottomAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: -8).isActive = true
+        checkmark.widthAnchor.constraint(equalToConstant: 23).isActive = true
+        checkmark.heightAnchor.constraint(equalToConstant: 23).isActive = true
     }
         
     required init?(coder: NSCoder) {
